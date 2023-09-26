@@ -1,3 +1,4 @@
+[![CI](https://github.com/Raveshaww/ansible-role-docker-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/Raveshaww/ansible-role-docker-ce/actions/workflows/ci.yml)
 # Ansible Role: Docker CE
 
 A simple role to install the following packages on Debian, Fedora, and Ubuntu systems:
