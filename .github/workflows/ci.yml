@@ -1,0 +1,17 @@
+---
+name: CI
+"on":
+  pull_request:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 15 * *"
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yml
+
+  molecule:
+    uses: ./.github/workflows/molecule.yml
+    needs: [lint]

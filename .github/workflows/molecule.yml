@@ -1,0 +1,33 @@
+---
+name: Molecule
+"on":
+  workflow_call:
+
+defaults:
+  run:
+    working-directory: "raveshaww.docker_ce"
+
+jobs:
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: "raveshaww.docker_ce"
+
+      - name: Set up Python3
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install test dependencies
+        run: pip3 install ansible molecule molecule-plugins[docker]
+
+      - name: Run Molecule tests
+        run: molecule test
+        env:
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
