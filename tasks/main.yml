@@ -1,14 +1,8 @@
 ---
 # tasks file for docker-ce
 - name: Load OS specific variables
-  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
-  vars:
-    params:
-      files:
-        - "{{ ansible_distribution_file_variety }}.yml"
-        - main.yml
-      paths:
-        - "vars"
+  ansible.builtin.include_vars:
+    file: "{{ ansible_distribution_file_variety }}.yml"
 
 - name: Update APT cache if Ubuntu / Debian
   ansible.builtin.apt:
