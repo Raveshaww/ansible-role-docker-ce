@@ -1,0 +1,12 @@
+---
+- name: Install RedHat pre-req software
+  ansible.builtin.package:
+    name: "{{ item.name }}"
+    state: latest
+  loop: "{{ prereq_software }}"
+
+- name: Add repo for RedHat
+  ansible.builtin.template:
+    src: templates/docker-ce.j2
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'

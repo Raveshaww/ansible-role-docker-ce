@@ -1,2 +1,28 @@
 ---
-# Empty file
+- name: Ensure that the Docker and Containerd services start on boot
+  ansible.builtin.service:
+    name: "{{ item.name }}"
+    state: started
+    enabled: true
+  loop: "{{ services }}"
+
+- name: Check if Docker and Containerd services are running
+  ansible.builtin.service_facts:
+  register: service_state
+  notify: Check if Docker packages were installed
+
+- name: Check if Docker packages were installed
+  ansible.builtin.package_facts:
+  register: package_state
+  notify: Evaluating raveshaww.docker_ce checks
+
+- name: Evaluating raveshaww.docker_ce checks
+  ansible.builtin.assert:
+    that:
+      - service_state.ansible_facts.services["containerd.service"].state == "running"
+      - service_state.ansible_facts.services["docker.service"].state == "running"
+      - package_state.ansible_facts.packages["docker-ce"] is defined
+      - package_state.ansible_facts.packages["docker-ce-cli"] is defined
+      - package_state.ansible_facts.packages["docker-buildx-plugin"] is defined
+      - package_state.ansible_facts.packages["docker-compose-plugin"] is defined
+    success_msg: "All checks passed"
