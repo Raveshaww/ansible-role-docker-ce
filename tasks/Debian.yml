@@ -4,7 +4,7 @@
     update_cache: true
     cache_valid_time: "3600"
 
-- name: Install pre-req software
+- name: Install Ubuntu / Debian pre-req software
   ansible.builtin.package:
     name: "{{ item.name }}"
     state: latest

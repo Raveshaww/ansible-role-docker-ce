@@ -1,5 +1,5 @@
 ---
-- name: Install pre-req software
+- name: Install RedHat pre-req software
   ansible.builtin.package:
     name: "{{ item.name }}"
     state: latest
